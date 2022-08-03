@@ -126,12 +126,12 @@ func methodReadParameter(c client.Client, address protocol.Address) error {
 	}
 
 	{
-		request, result := read_parameter.NewInstantIndicatorsPowerK()
+		request, result := read_parameter.NewInstantIndicatorsPowerFactor()
 		if err := c.Request(address, request, result); err != nil {
 			return err
 		}
 		str, _ := json.Marshal(result)
-		fmt.Printf("Read parameter: instant indicators power k %s\n", str)
+		fmt.Printf("Read parameter: instant indicators power factor %s\n", str)
 	}
 
 	{
@@ -245,7 +245,7 @@ func methodReadParameter(c client.Client, address protocol.Address) error {
 	}
 
 	{
-		request, result := read_parameter.NewStoredIndicatorsKPower()
+		request, result := read_parameter.NewStoredIndicatorsPowerFactor()
 		if err := c.Request(address, request, result); err != nil {
 			return err
 		}

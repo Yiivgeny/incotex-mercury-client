@@ -76,7 +76,7 @@ const (
 	BWRIModePower         BWRIMode = 0x00 << 4
 	BWRIModeVoltage       BWRIMode = 0x01 << 4
 	BWRIModeCurrent       BWRIMode = 0x02 << 4
-	BWRIModeKPower        BWRIMode = 0x03 << 4
+	BWRIModePowerFactor   BWRIMode = 0x03 << 4
 	BWRIModeFrequency     BWRIMode = 0x04 << 4
 	BWRIModePhaseShift    BWRIMode = 0x05 << 4
 	BWRIModeDistortion    BWRIMode = 0x06 << 4

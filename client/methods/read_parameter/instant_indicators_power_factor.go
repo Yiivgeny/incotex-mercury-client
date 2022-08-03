@@ -5,22 +5,22 @@ import (
 	"github.com/Yiivgeny/incotex-mercury-client/protocol"
 )
 
-func NewInstantIndicatorsPowerK() (protocol.PDU, *PowerK) {
-	target := &PowerK{}
+func NewInstantIndicatorsPowerFactor() (protocol.PDU, *PowerFactor) {
+	target := &PowerFactor{}
 	return protocol.PDU{
 		byte(protocol.MethodReadParameter),
 		byte(protocol.ParameterInstantIndicators),
-		byte(protocol.BWRIModeKPower) | byte(protocol.BWRIPhaseA),
+		byte(protocol.BWRIModePowerFactor) | byte(protocol.BWRIPhaseA),
 	}, target
 }
 
-type PowerK struct {
+type PowerFactor struct {
 	A float32 `json:"a"`
 	B float32 `json:"b"`
 	C float32 `json:"c"`
 }
 
-func (r *PowerK) Unmarshall(pdu protocol.PDU) error {
+func (r *PowerFactor) Unmarshall(pdu protocol.PDU) error {
 	if len(pdu) != 9 {
 		return errors.New("pdu length mismatch")
 	}

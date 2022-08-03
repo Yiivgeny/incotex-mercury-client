@@ -15,17 +15,17 @@ func NewInstantIndicators() (protocol.PDU, *InstantIndicators) {
 }
 
 type InstantIndicators struct {
-	PowerP        *PowerInstant  `json:"power_p,omitempty"`
-	PowerQ        *PowerInstant  `json:"power_q,omitempty"`
-	PowerS        *PowerInstant  `json:"power_s,omitempty"`
-	Voltage       *Voltage       `json:"voltage,omitempty"`
-	PhaseShift    *PhaseShift    `json:"phase_shift,omitempty"`
-	Current       *Current       `json:"current,omitempty"`
-	PowerK        *PowerKWithSum `json:"power_k,omitempty"`
-	Frequency     *Frequency     `json:"frequency,omitempty"`
-	Distortion    *Distortion    `json:"distortion,omitempty"`
-	Temperature   *Temperature   `json:"temperature,omitempty"`
-	LinearVoltage *LinearVoltage `json:"linear_voltage,omitempty"`
+	PowerP        *PowerInstant       `json:"power_p,omitempty"`
+	PowerQ        *PowerInstant       `json:"power_q,omitempty"`
+	PowerS        *PowerInstant       `json:"power_s,omitempty"`
+	Voltage       *Voltage            `json:"voltage,omitempty"`
+	PhaseShift    *PhaseShift         `json:"phase_shift,omitempty"`
+	Current       *Current            `json:"current,omitempty"`
+	PowerFactor   *PowerFactorWithSum `json:"power_factor,omitempty"`
+	Frequency     *Frequency          `json:"frequency,omitempty"`
+	Distortion    *Distortion         `json:"distortion,omitempty"`
+	Temperature   *Temperature        `json:"temperature,omitempty"`
+	LinearVoltage *LinearVoltage      `json:"linear_voltage,omitempty"`
 }
 
 func (r *InstantIndicators) Unmarshall(pdu protocol.PDU) error {
@@ -57,8 +57,8 @@ func (r *InstantIndicators) Unmarshall(pdu protocol.PDU) error {
 	if err := r.Current.Unmarshall(pdu[54:63]); err != nil {
 		return err
 	}
-	r.PowerK = &PowerKWithSum{}
-	if err := r.PowerK.Unmarshall(pdu[63:75]); err != nil {
+	r.PowerFactor = &PowerFactorWithSum{}
+	if err := r.PowerFactor.Unmarshall(pdu[63:75]); err != nil {
 		return err
 	}
 	r.Frequency = &Frequency{}

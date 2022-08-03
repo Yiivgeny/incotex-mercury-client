@@ -5,23 +5,23 @@ import (
 	"github.com/Yiivgeny/incotex-mercury-client/protocol"
 )
 
-func NewStoredIndicatorsKPower() (protocol.PDU, *PowerKWithSum) {
-	target := &PowerKWithSum{}
+func NewStoredIndicatorsPowerFactor() (protocol.PDU, *PowerFactorWithSum) {
+	target := &PowerFactorWithSum{}
 	return protocol.PDU{
 		byte(protocol.MethodReadParameter),
 		byte(protocol.ParameterStoredIndicators),
-		byte(protocol.BWRIModeKPower) | byte(protocol.BWRIPhaseA),
+		byte(protocol.BWRIModePowerFactor) | byte(protocol.BWRIPhaseA),
 	}, target
 }
 
-type PowerKWithSum struct {
+type PowerFactorWithSum struct {
 	A   float32 `json:"a"`
 	B   float32 `json:"b"`
 	C   float32 `json:"c"`
 	Sum float32 `json:"sum"`
 }
 
-func (r *PowerKWithSum) Unmarshall(pdu protocol.PDU) error {
+func (r *PowerFactorWithSum) Unmarshall(pdu protocol.PDU) error {
 	if len(pdu) != 12 {
 		return errors.New("pdu length mismatch")
 	}

@@ -15,17 +15,17 @@ func NewStoredIndicators() (protocol.PDU, *StoredIndicators) {
 }
 
 type StoredIndicators struct {
-	DateTime    *StoreDateTime  `json:"date_time,omitempty"`
-	Energy      *EnergyByTariff `json:"energy,omitempty"`
-	EnergyTotal *Energy         `json:"energy_total,omitempty"`
-	PowerP      *Power          `json:"power_p,omitempty"`
-	PowerQ      *Power          `json:"power_q,omitempty"`
-	PowerS      *Power          `json:"power_s,omitempty"`
-	Voltage     *Voltage        `json:"voltage,omitempty"`
-	PhaseShift  *PhaseShift     `json:"phase_shift,omitempty"`
-	Current     *Current        `json:"current,omitempty"`
-	PowerK      *PowerKWithSum  `json:"power_k,omitempty"`
-	Frequency   *Frequency      `json:"frequency,omitempty"`
+	DateTime    *StoreDateTime      `json:"date_time,omitempty"`
+	Energy      *EnergyByTariff     `json:"energy,omitempty"`
+	EnergyTotal *Energy             `json:"energy_total,omitempty"`
+	PowerP      *Power              `json:"power_p,omitempty"`
+	PowerQ      *Power              `json:"power_q,omitempty"`
+	PowerS      *Power              `json:"power_s,omitempty"`
+	Voltage     *Voltage            `json:"voltage,omitempty"`
+	PhaseShift  *PhaseShift         `json:"phase_shift,omitempty"`
+	Current     *Current            `json:"current,omitempty"`
+	PowerK      *PowerFactorWithSum `json:"power_factor,omitempty"`
+	Frequency   *Frequency          `json:"frequency,omitempty"`
 }
 
 func (r *StoredIndicators) Unmarshall(pdu protocol.PDU) error {
@@ -69,7 +69,7 @@ func (r *StoredIndicators) Unmarshall(pdu protocol.PDU) error {
 	if err := r.Current.Unmarshall(pdu[154:163]); err != nil {
 		return err
 	}
-	r.PowerK = &PowerKWithSum{}
+	r.PowerK = &PowerFactorWithSum{}
 	if err := r.PowerK.Unmarshall(pdu[163:175]); err != nil {
 		return err
 	}
