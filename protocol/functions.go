@@ -30,24 +30,22 @@ func Bdc2Int(value byte) int {
 	return result
 }
 
-func SignedFloatDecode(v []byte) float32 {
-	activeSign := 1
-	reactiveSign := 1
+func UnpackSignedPower(v []byte, active int, reactive int) int {
+	result := 1
 	signByte := 0
-
 	if len(v) == 4 {
 		signByte = 1
 	}
 
-	if v[signByte]&0b10000000 > 0 {
-		activeSign = -1
+	if active != 0 && v[signByte]&0b10000000 > 0 {
+		result = -1 * active
 	}
-	if v[signByte]&0b01000000 > 0 {
-		reactiveSign = -1
+	if reactive != 0 && v[signByte]&0b01000000 > 0 {
+		result = -1 * reactive
 	}
 	v[signByte] = 0
 
-	return float32(UnpackInteger(v)) / float32(100*activeSign*reactiveSign)
+	return int(UnpackInteger(v)) * result
 }
 
 func FrameTimeout(baud uint, long bool) time.Duration {

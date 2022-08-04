@@ -26,10 +26,10 @@ func (r *PowerFactorWithSum) Unmarshall(pdu protocol.PDU) error {
 		return errors.New("pdu length mismatch")
 	}
 
-	r.Sum = protocol.SignedFloatDecode(pdu[0:3]) / 1000
-	r.A = protocol.SignedFloatDecode(pdu[3:6]) / 1000
-	r.B = protocol.SignedFloatDecode(pdu[6:9]) / 1000
-	r.C = protocol.SignedFloatDecode(pdu[9:12]) / 1000
+	r.Sum = float32(protocol.UnpackSignedPower(pdu[0:3], 0, 0)) / 1000
+	r.A = float32(protocol.UnpackSignedPower(pdu[3:6], 0, 0)) / 1000
+	r.B = float32(protocol.UnpackSignedPower(pdu[6:9], 0, 0)) / 1000
+	r.C = float32(protocol.UnpackSignedPower(pdu[9:12], 0, 0)) / 1000
 
 	return nil
 }

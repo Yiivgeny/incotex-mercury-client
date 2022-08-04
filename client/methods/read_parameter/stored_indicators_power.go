@@ -6,7 +6,21 @@ import (
 )
 
 func NewStoredIndicatorsPower(power protocol.BWRIPower) (protocol.PDU, *Power) {
-	target := &Power{}
+	active := 0
+	reactive := 0
+
+	if power == protocol.BWRIPowerP {
+		active = 1
+	}
+	if power == protocol.BWRIPowerQ {
+		reactive = 1
+	}
+
+	target := &Power{
+		decoder: func(pdu []byte) float32 {
+			return float32(protocol.UnpackSignedPower(pdu, active, reactive)) / 100
+		},
+	}
 	return protocol.PDU{
 		byte(protocol.MethodReadParameter),
 		byte(protocol.ParameterStoredIndicators),
@@ -15,10 +29,12 @@ func NewStoredIndicatorsPower(power protocol.BWRIPower) (protocol.PDU, *Power) {
 }
 
 type Power struct {
-	A float32 `json:"a"`
-	B float32 `json:"b"`
-	C float32 `json:"c"`
-	S float32 `json:"sum"`
+	A   float32 `json:"a"`
+	B   float32 `json:"b"`
+	C   float32 `json:"c"`
+	Sum float32 `json:"sum"`
+
+	decoder func([]byte) float32
 }
 
 func (r *Power) Unmarshall(pdu protocol.PDU) error {
@@ -26,10 +42,10 @@ func (r *Power) Unmarshall(pdu protocol.PDU) error {
 		return errors.New("pdu length mismatch")
 	}
 
-	r.S = protocol.SignedFloatDecode(pdu[0:4])
-	r.A = protocol.SignedFloatDecode(pdu[4:8])
-	r.B = protocol.SignedFloatDecode(pdu[8:12])
-	r.C = protocol.SignedFloatDecode(pdu[12:16])
+	r.Sum = r.decoder(pdu[0:4])
+	r.A = r.decoder(pdu[4:8])
+	r.B = r.decoder(pdu[8:12])
+	r.C = r.decoder(pdu[12:16])
 
 	return nil
 }

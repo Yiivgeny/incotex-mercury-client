@@ -33,15 +33,15 @@ func (r *InstantIndicators) Unmarshall(pdu protocol.PDU) error {
 		return errors.New("pdu length mismatch")
 	}
 
-	r.PowerP = &PowerInstant{}
+	_, r.PowerP = NewInstantIndicatorsPower(protocol.BWRIPowerP)
 	if err := r.PowerP.Unmarshall(pdu[0:12]); err != nil {
 		return err
 	}
-	r.PowerQ = &PowerInstant{}
+	_, r.PowerQ = NewInstantIndicatorsPower(protocol.BWRIPowerQ)
 	if err := r.PowerQ.Unmarshall(pdu[12:24]); err != nil {
 		return err
 	}
-	r.PowerS = &PowerInstant{}
+	_, r.PowerS = NewInstantIndicatorsPower(protocol.BWRIPowerS)
 	if err := r.PowerS.Unmarshall(pdu[24:36]); err != nil {
 		return err
 	}

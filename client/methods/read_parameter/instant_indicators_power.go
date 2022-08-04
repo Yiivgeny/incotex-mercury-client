@@ -6,7 +6,21 @@ import (
 )
 
 func NewInstantIndicatorsPower(power protocol.BWRIPower) (protocol.PDU, *PowerInstant) {
-	target := &PowerInstant{}
+	active := 0
+	reactive := 0
+
+	if power == protocol.BWRIPowerP {
+		active = 1
+	}
+	if power == protocol.BWRIPowerQ {
+		reactive = 1
+	}
+
+	target := &PowerInstant{
+		decoder: func(pdu []byte) float32 {
+			return float32(protocol.UnpackSignedPower(pdu, active, reactive)) / 100
+		},
+	}
 	return protocol.PDU{
 		byte(protocol.MethodReadParameter),
 		byte(protocol.ParameterInstantIndicators),
@@ -19,6 +33,8 @@ type PowerInstant struct {
 	B   float32 `json:"b"`
 	C   float32 `json:"c"`
 	Sum float32 `json:"sum"`
+
+	decoder func([]byte) float32
 }
 
 func (r *PowerInstant) Unmarshall(pdu protocol.PDU) error {
@@ -26,10 +42,10 @@ func (r *PowerInstant) Unmarshall(pdu protocol.PDU) error {
 		return errors.New("pdu length mismatch")
 	}
 
-	r.Sum = protocol.SignedFloatDecode(pdu[0:3])
-	r.A = protocol.SignedFloatDecode(pdu[3:6])
-	r.B = protocol.SignedFloatDecode(pdu[6:9])
-	r.C = protocol.SignedFloatDecode(pdu[9:12])
+	r.Sum = r.decoder(pdu[0:3])
+	r.A = r.decoder(pdu[3:6])
+	r.B = r.decoder(pdu[6:9])
+	r.C = r.decoder(pdu[9:12])
 
 	return nil
 }
