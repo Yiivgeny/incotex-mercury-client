@@ -15,7 +15,7 @@ func NewInstantIndicatorsTemperature() (protocol.PDU, *Temperature) {
 }
 
 type Temperature struct {
-	Temperature uint16 `json:"temperature"`
+	Temperature int16 `json:"temperature"`
 }
 
 func (r *Temperature) Unmarshall(pdu protocol.PDU) error {

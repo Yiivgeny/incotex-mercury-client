@@ -19,8 +19,9 @@ func UnpackInteger(value []byte) uint32 {
 	return binary.BigEndian.Uint32(r)
 }
 
-func UnpackNormalShort(value []byte) uint16 {
-	return binary.BigEndian.Uint16(value)
+func UnpackNormalShort(value []byte) int16 {
+	_ = value[1]
+	return int16(value[1]) | int16(value[0])<<8
 }
 
 func Bdc2Int(value byte) int {
