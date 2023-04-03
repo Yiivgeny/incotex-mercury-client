@@ -121,3 +121,45 @@ const (
 	BWRITariff3     BWRITariff = 0x03
 	BWRITariff4     BWRITariff = 0x04
 )
+
+type EnergyTariff byte
+
+const (
+	EnergyTariffTotal  EnergyTariff = 0x00
+	EnergyTariff1      EnergyTariff = 0x01
+	EnergyTariff2      EnergyTariff = 0x02
+	EnergyTariff3      EnergyTariff = 0x03
+	EnergyTariff4      EnergyTariff = 0x04
+	EnergyTariffLosses EnergyTariff = 0x05
+	EnergyTariffRapid  EnergyTariff = 0x06
+)
+
+type EnergyRegistry byte
+
+const (
+	EnergyFromReset         EnergyRegistry = 0x00
+	EnergyCurrentYear       EnergyRegistry = 0x10
+	EnergyPastYear          EnergyRegistry = 0x20
+	EnergyToday             EnergyRegistry = 0x40
+	EnergyYesterday         EnergyRegistry = 0x50
+	EnergyStartYear         EnergyRegistry = 0x70
+	EnergyStartPrevYear     EnergyRegistry = 0xA0
+	EnergyStartMonth        EnergyRegistry = 0xB0
+	EnergyMidnight          EnergyRegistry = 0xC0
+	EnergyYesterdayMidnight EnergyRegistry = 0xD0
+
+	EnergyMonthJan EnergyRegistry = 0x31
+	EnergyMonthFeb EnergyRegistry = 0x32
+	EnergyMonthMar EnergyRegistry = 0x33
+	EnergyMonthApr EnergyRegistry = 0x34
+	EnergyMonthMay EnergyRegistry = 0x35
+	EnergyMonthJun EnergyRegistry = 0x36
+	EnergyMonthJul EnergyRegistry = 0x37
+	EnergyMonthAug EnergyRegistry = 0x38
+	EnergyMonthSep EnergyRegistry = 0x39
+	EnergyMonthOct EnergyRegistry = 0x3A
+	EnergyMonthNov EnergyRegistry = 0x3B
+	EnergyMonthDec EnergyRegistry = 0x3C
+
+	EnergyPhase EnergyRegistry = 0x60
+)

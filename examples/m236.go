@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/Yiivgeny/incotex-mercury-client/client"
+	"github.com/Yiivgeny/incotex-mercury-client/client/methods/read_energy"
 	"github.com/Yiivgeny/incotex-mercury-client/client/methods/read_parameter"
 	"github.com/Yiivgeny/incotex-mercury-client/protocol"
 )
@@ -51,7 +52,6 @@ func main() {
 }
 
 func methodReadParameter(c client.Client, address protocol.Address) error {
-	
 
 	{
 		request, result := read_parameter.NewSerialNumberAndBuildDate()
@@ -323,6 +323,69 @@ func methodReadParameter(c client.Client, address protocol.Address) error {
 		}
 		str, _ := json.Marshal(result)
 		fmt.Printf("Read parameter: stored indicators %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergy(protocol.EnergyFromReset, protocol.EnergyTariffTotal)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy: from reset total %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergy(protocol.EnergyFromReset, protocol.EnergyTariff1)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy: from reset tariff 1 %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergy(protocol.EnergyFromReset, protocol.EnergyTariff2)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy: from reset tariff 2 %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergy(protocol.EnergyFromReset, protocol.EnergyTariff3)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy: from reset tariff 3 %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergy(protocol.EnergyFromReset, protocol.EnergyTariff4)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy: from reset tariff 4 %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergyByPhase(protocol.EnergyTariffTotal)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy phases: from reset total %s\n", str)
+	}
+
+	{
+		request, result := read_energy.NewReadEnergyRapid(protocol.EnergyFromReset)
+		if err := c.Request(address, request, result); err != nil {
+			return err
+		}
+		str, _ := json.Marshal(result)
+		fmt.Printf("Read energy rapid: from reset total %s\n", str)
 	}
 
 	return nil

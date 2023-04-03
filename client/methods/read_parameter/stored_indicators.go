@@ -82,10 +82,10 @@ func (r *StoredIndicators) Unmarshall(pdu protocol.PDU) error {
 }
 
 type EnergyByTariff struct {
-	Tariff1 *Energy `json:"tariff_1,omitempty"`
-	Tariff2 *Energy `json:"tariff_2,omitempty"`
-	Tariff3 *Energy `json:"tariff_3,omitempty"`
-	Tariff4 *Energy `json:"tariff_4,omitempty"`
+	Tariff1 *Energy `json:"tariff1,omitempty"`
+	Tariff2 *Energy `json:"tariff2,omitempty"`
+	Tariff3 *Energy `json:"tariff3,omitempty"`
+	Tariff4 *Energy `json:"tariff4,omitempty"`
 }
 
 func (r *EnergyByTariff) Unmarshall(pdu protocol.PDU) error {
