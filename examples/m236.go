@@ -10,7 +10,7 @@ import (
 	"github.com/Yiivgeny/incotex-mercury-client/protocol"
 )
 
-func main()  {
+func main() {
 	address := protocol.Address(0)
 
 	cfg := client.NewConfig(9600, 2)

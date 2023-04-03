@@ -45,15 +45,15 @@ func (r *StoredIndicators) Unmarshall(pdu protocol.PDU) error {
 	if err := r.EnergyTotal.Unmarshall(pdu[72:88]); err != nil {
 		return err
 	}
-	r.PowerP = &Power{}
+	_, r.PowerP = NewStoredIndicatorsPower(protocol.BWRIPowerP)
 	if err := r.PowerP.Unmarshall(pdu[88:104]); err != nil {
 		return err
 	}
-	r.PowerQ = &Power{}
+	_, r.PowerQ = NewStoredIndicatorsPower(protocol.BWRIPowerQ)
 	if err := r.PowerQ.Unmarshall(pdu[104:120]); err != nil {
 		return err
 	}
-	r.PowerS = &Power{}
+	_, r.PowerS = NewStoredIndicatorsPower(protocol.BWRIPowerS)
 	if err := r.PowerS.Unmarshall(pdu[120:136]); err != nil {
 		return err
 	}
